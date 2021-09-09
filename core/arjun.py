@@ -22,8 +22,9 @@ def checky(param, paraNames, url, headers, GET, delay, timeout):
 def arjun(url, GET, headers, delay, timeout):
     paraNames = {}
     response = requester(url, {}, headers, GET, delay, timeout).text
-    matches = re.findall(
-        r'<input.*?name=\'(.*?)\'.*?>|<input.*?name="(.*?)".*?>', response)
+    #matches = re.findall(r'<input.*?name=\'(.*?)\'.*?>|<input.*?name="(.*?)".*?>', response)
+    re_input_names = re.compile(r'''(?i)<input.+?name=["']?([^"'\s>]+)''')
+    matches = re_input_names.findall(response)
     for match in matches:
         try:
             foundParam = match[1]
